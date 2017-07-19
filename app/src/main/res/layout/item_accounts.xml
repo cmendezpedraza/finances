@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_accounts"
+    style="@style/AppTheme.Card.Margins"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/item_account_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_account"/>
+        <TextView
+            android:id="@+id/item_account_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Account Name"
+            android:paddingLeft="60dp"
+            android:paddingTop="10dp"/>
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
