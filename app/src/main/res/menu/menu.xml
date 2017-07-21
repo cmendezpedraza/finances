@@ -10,5 +10,11 @@
             android:id="@+id/nav_credit_Card"
             android:title="@string/nav_credit_card"
             android:icon="@drawable/ic_credit_card"/>
+
+        <item
+            android:id="@+id/nav_categories"
+            android:title="Administrar Categorias"
+            android:icon="@drawable/ic_settings"/>
+
     </group>
 </menu>

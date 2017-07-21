@@ -1,8 +1,8 @@
 package mx.com.cmp.finances;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -15,12 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
 import mx.com.cmp.finances.fragments.AccountFragment;
 
 public class Principal extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG_ACCOUNT = "account";
     private static final String TAG_CREDIT_CARD = "credit_card";
+    private static final String TAG_CATEGORY = "category";
     public static String CURRENT_TAG = TAG_ACCOUNT;
 
 
@@ -39,13 +41,7 @@ public class Principal extends AppCompatActivity implements NavigationView.OnNav
         mTitles = getResources().getStringArray(R.array.menu_titles);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(new floatingButtonListener());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -56,7 +52,16 @@ public class Principal extends AppCompatActivity implements NavigationView.OnNav
         navigationView = (NavigationView) findViewById(R.id.menu_view);
         navigationView.setNavigationItemSelectedListener(this);
         setToolbarTitle();
+    }
 
+    public class floatingButtonListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), AccountActivity.class);
+            startActivity(intent);
+
+        }
     }
 
     @Override
@@ -70,7 +75,7 @@ public class Principal extends AppCompatActivity implements NavigationView.OnNav
             if (menuIndex != 0) {
                 menuIndex = 0;
                 CURRENT_TAG = TAG_ACCOUNT;
-                loadFragment();
+                loadSection();
                 return;
             }
         }
@@ -106,12 +111,16 @@ public class Principal extends AppCompatActivity implements NavigationView.OnNav
                 menuIndex = 1;
                 CURRENT_TAG = TAG_CREDIT_CARD;
                 break;
+            case R.id.nav_categories:
+                menuIndex = 2;
+                CURRENT_TAG = TAG_CATEGORY;
+                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
         setToolbarTitle();
-        loadFragment();
+        loadSection();
 
         return true;
     }
@@ -120,12 +129,17 @@ public class Principal extends AppCompatActivity implements NavigationView.OnNav
         getSupportActionBar().setTitle(mTitles[menuIndex]);
     }
 
-    private void loadFragment() {
-        Fragment fragment = getFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out);
-        fragmentTransaction.replace(R.id.principal_frame, fragment, CURRENT_TAG);
-        fragmentTransaction.commitAllowingStateLoss();
+    private void loadSection() {
+        if(menuIndex == 2) {
+            Intent intent = new Intent(this, CategoryActivity.class);
+            startActivity(intent);
+        } else {
+            Fragment fragment = getFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.principal_frame, fragment, CURRENT_TAG);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
 
     }
 
